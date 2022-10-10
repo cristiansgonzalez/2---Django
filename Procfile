@@ -1,1 +1,1 @@
-web: gunicorn Estadisticos:app
+web: gunicorn manage:app
