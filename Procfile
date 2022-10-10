@@ -1,1 +1,1 @@
-web: gunicorn Estadisticos.wsgi --log-file -
+web: gunicorn unad.wsgi --log-file -
