@@ -1,1 +1,1 @@
-web: gunicorn manage:app
+web: gunicorn Estadisticos.wsgi --log-file -
