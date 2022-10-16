@@ -8,7 +8,7 @@ from .Analisis import *
 import pandas as pd
 import numpy as np
 import statistics
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import requires_csrf_token
 
 # Create your views here.
 
@@ -50,7 +50,7 @@ def index(request):
             "url": reporte,
         })
 
-@csrf_protect
+@requires_csrf_token
 def comentarios(request):
 
     titulo = "Comentarios"
