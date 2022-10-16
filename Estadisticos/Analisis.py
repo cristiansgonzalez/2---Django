@@ -387,9 +387,7 @@ def Analisis_Curso(*arg):
     condi =pd.DataFrame (condiciones)
     
     try:
-        print(arg[0])
         nombre_documento = arg[0][0:len(arg[0])-5]
-        print(nombre_documento)
         with pd.ExcelWriter('media/resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx') as writer:
             cab = ['Ceros','Reprobaron','Aprobaron','Total']
             est.to_excel(writer, sheet_name='Estudiantes',header=['Cedula','Estudiante','Correo'],index=False)
@@ -407,6 +405,6 @@ def Analisis_Curso(*arg):
         print('El Reporte '+str(arg[2])+' Se creo Exitosamente')
         print(nombre_documento+' Reporte '+str(arg[2])+'.xlsx')
     
-    return ('resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx')
+    return ('/media/resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx')
         
         

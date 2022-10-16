@@ -31,26 +31,23 @@ def index(request):
         Puntaje_actividad = int(request.POST["Puntaje_actividad"])
         actividad = int(request.POST["actividad"])
         print(archivo.name)
-        print(archivo.size)
-        print(tipo)
         
         fs = FileSystemStorage()
-        fs.save(fs.get_valid_name(archivo.name), archivo)
-        #direccion = fs.save(archivo.name, archivo)
-        print(fs.get_valid_name(archivo.name))
-        print(fs.get_available_name(archivo.name))
+        direccion =fs.save(fs.get_valid_name(archivo.name), archivo)
         
         reporte = Analisis_Curso(archivo.name, Puntaje_actividad, actividad, Numero_actividades, 'no', tipo)
         print(reporte)
         fs.delete(archivo.name)  
         
-        #contenido['url'] = fs.url(direccion)
+        contenido['url'] = fs.url(direccion)
+        print("Esta es la direccion: ", contenido.values)
                 
         #return redirect("/")
         return render(request, "descarga.html", {
             "title": "Descargar",
             #"url": fs.url(direccion),
-            "url": fs.url(reporte),
+            #"url": fs.url(reporte),
+            "url": reporte,
         })
 
 
