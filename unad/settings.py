@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-9e#6@#2#f$wpesup*qo8d^&zvy_t9v#obsp4h!n-fptax9&f07
 # SECURITY WARNING: don't run with debug turned on in production!
 ###if not IS_HEROKU:
 ###    DEBUG = True
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["aplicativo-unad2.azurewebsites.net"]
                          #https://aplicativo-unad2.azurewebsites.net/
 #CSRF_TRUSTED_ORIGINS = ["https://aplicativo-unad2.azurewebsites.net/", "https://www.aplicativo-unad2.azurewebsites.net/"]
