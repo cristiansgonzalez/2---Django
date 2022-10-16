@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/4a2e07a6-c070-44a8-b81d-2bf2ee01bb82/AppServices/subscriptions/4a2e07a6-c070-44a8-b81d-2bf2ee01bb82/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/aplicativo-unad",
+    "appService.deploySubpath": "."
+}
