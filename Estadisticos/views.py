@@ -70,7 +70,9 @@ def comentarios(request):
         return redirect("/comentarios/")
     
     
-
+def csrf_failure(request, reason=""):
+    ctx = {'message': 'some custom messages'}
+    return render(request, "error.html", ctx)
 
     
 
