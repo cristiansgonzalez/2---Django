@@ -8,10 +8,11 @@ from .Analisis import *
 import pandas as pd
 import numpy as np
 import statistics
+from django.views.decorators.csrf import csrf_protect
     
 
 # Create your views here.
-
+@csrf_protect
 def index(request):
 
     titulo = "Aplicacion"
@@ -50,7 +51,7 @@ def index(request):
             "url": reporte,
         })
 
-
+@csrf_protect
 def comentarios(request):
 
     titulo = "Comentarios"
@@ -69,11 +70,11 @@ def comentarios(request):
         Usuario.objects.create(nombre = request.POST['nombreForm'], comentario = request.POST['comentarioForm'], fecha = now)
         return redirect("/comentarios/")
     
-    
+'''
 def csrf_failure(request, reason=""):
     ctx = {'message': 'some custom messages'}
     return render(request, "error.html", ctx)
-
+'''
     
 
 def contacto(request):
