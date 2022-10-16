@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'aplicativo-unad2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D86705B3F7724CC294FAD6D1699D3A98 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_491E758657064ECBB1546B0927A123B1 }}
