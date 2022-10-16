@@ -70,9 +70,16 @@ def comentarios(request):
         return redirect("/comentarios/")
     
     
+def csrf_failure(request, reason=""):
 
+    titulo = "Comentarios"
+    datos_servidor = Usuario.objects.all()
 
-    
+    return render(request, "comentarios.html", {
+        "title": titulo,
+        "datos": datos_servidor,
+        "form": formularioComentarios(),
+    })
 
 def contacto(request):
 
