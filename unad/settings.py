@@ -26,8 +26,8 @@ SECRET_KEY = "django-insecure-9e#6@#2#f$wpesup*qo8d^&zvy_t9v#obsp4h!n-fptax9&f07
 ###if not IS_HEROKU:
 ###    DEBUG = True
 DEBUG = True
-#ALLOWED_HOSTS = ["aplicativo-unad2.azurewebsites.net"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["aplicativo-unad2.azurewebsites.net"]
+#ALLOWED_HOSTS = []
 '''
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
