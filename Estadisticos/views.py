@@ -46,7 +46,7 @@ def index(request):
         
         return render("descarga.html", {
             "title": "Descargar",
-            "url": reporte,
+            #"url": reporte,
         })  
         '''
         #return redirect("/")
@@ -73,18 +73,9 @@ def comentarios(request):
         })
 
     elif request.method == "POST":
-
         now = datetime.now()
         Usuario.objects.create(nombre = request.POST['nombreForm'], comentario = request.POST['comentarioForm'], fecha = now)
         return redirect("/comentarios/")
-        '''
-        return render(request, "comentarios.html", {
-            "title": titulo,
-            "datos": datos_servidor,
-            "form": formularioComentarios(),
-        })
-        
-        '''
 
 def contacto(request):
 
