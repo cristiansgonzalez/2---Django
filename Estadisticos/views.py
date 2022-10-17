@@ -43,8 +43,9 @@ def index(request):
         
         contenido['url'] = fs.url(direccion)
         print("Esta es la direccion: ", contenido.values)
+        #return render("descarga.html", reporte)  
         
-        return render("descarga.html", {
+        return render(request, "descarga.html", {
             "title": "Descargar",
             "url": reporte,
         })  
@@ -58,6 +59,10 @@ def index(request):
             "url": reporte,
         })
         '''
+
+def descargar(request, entrada):
+    print("esto es lo que esta entrando", entrada)
+    return render(request, "descargar.html")
 
 @csrf_exempt
 def comentarios(request):
