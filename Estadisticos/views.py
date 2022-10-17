@@ -8,12 +8,12 @@ from .Analisis import *
 import pandas as pd
 import numpy as np
 import statistics
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 
 # Create your views here.
 
-@csrf_protect
+@csrf_exempt
 def index(request):
 
     titulo = "Aplicacion"
@@ -59,7 +59,7 @@ def index(request):
         })
         '''
 
-@csrf_protect
+@csrf_exempt
 def comentarios(request):
 
     titulo = "Comentarios"
@@ -76,14 +76,14 @@ def comentarios(request):
 
         now = datetime.now()
         Usuario.objects.create(nombre = request.POST['nombreForm'], comentario = request.POST['comentarioForm'], fecha = now)
-        #return redirect("/comentarios/")
-        
+        return redirect("/comentarios/")
+        '''
         return render(request, "comentarios.html", {
             "title": titulo,
             "datos": datos_servidor,
             "form": formularioComentarios(),
         })
-        '''
+        
         '''
 
 def contacto(request):
