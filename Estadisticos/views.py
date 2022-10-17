@@ -46,7 +46,7 @@ def index(request):
         
         return render("descarga.html", {
             "title": "Descargar",
-            #"url": reporte,
+            "url": reporte,
         })  
         '''
         #return redirect("/")
