@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import formularioComentarios, ArchivoExcel
@@ -43,11 +43,11 @@ def index(request):
         
         contenido['url'] = fs.url(direccion)
         print("Esta es la direccion: ", contenido.values)
-        '''
-        return render_to_response("descarga.html", {
+        
+        return render("descarga.html", {
             "title": "Descargar",
             "url": reporte,
-        }, context_instance = RequestContext(request))  
+        })  
         '''
         #return redirect("/")
         
@@ -57,7 +57,7 @@ def index(request):
             #"url": fs.url(reporte),
             "url": reporte,
         })
-        
+        '''
 
 @csrf_protect
 def comentarios(request):
@@ -76,13 +76,14 @@ def comentarios(request):
 
         now = datetime.now()
         Usuario.objects.create(nombre = request.POST['nombreForm'], comentario = request.POST['comentarioForm'], fecha = now)
-        return redirect("/comentarios/")
-        '''
-        return render_to_response(request, "comentarios.html", {
+        #return redirect("/comentarios/")
+        
+        return render(request, "comentarios.html", {
             "title": titulo,
             "datos": datos_servidor,
             "form": formularioComentarios(),
-        }, context_instance = RequestContext(request))
+        })
+        '''
         '''
 
 def contacto(request):
