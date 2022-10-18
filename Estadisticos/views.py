@@ -16,7 +16,7 @@ from django.template import RequestContext
 @csrf_exempt
 def index(request):
 
-    titulo = "Aplicacion"
+    titulo = "Aplicación"
 
     if request.method == "GET":
         return render(request, "index.html", {
