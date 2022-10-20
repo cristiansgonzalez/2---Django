@@ -35,8 +35,9 @@ def index(request):
         print(archivo.name)
         
         fs = FileSystemStorage()
-        direccion =fs.save(fs.get_valid_name(archivo.name), archivo)
-        
+        #direccion =fs.save(fs.get_valid_name(archivo.name), archivo)
+        direccion =fs.save(archivo.name, archivo)
+        print("direccion ", direccion)
         reporte = Analisis_Curso(archivo.name, Puntaje_actividad, actividad, Numero_actividades, 'no', tipo)
         print(reporte)
         fs.delete(archivo.name)  
