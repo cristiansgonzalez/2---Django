@@ -392,11 +392,11 @@ def Analisis_Curso(*arg):
             cab = ['Ceros','Reprobaron','Aprobaron','Total']
             est.to_excel(writer, sheet_name='Estudiantes',header=['Cedula','Estudiante','Correo'],index=False)
             gra.to_excel(writer, sheet_name='Grafica',header=False,index=False)
-            #ce.to_excel(writer, sheet_name='Centros',header=['Centros'] + cab, index = False)
-            #po.to_excel(writer, sheet_name='Programa',header=['Programa'] + cab, index = False)
-            #te.to_excel(writer, sheet_name='Intentos',header=['Intentos'] + cab, index = False)
-            #zo.to_excel(writer, sheet_name='Zonas',header=['Zonas'] + cab, index = False)
-            #condi.to_excel(writer, sheet_name='Condiciones',header=['Cedula','Estudiante','Correo','Condicion especial'],index=False)
+            ce.to_excel(writer, sheet_name='Centros',header=['Centros'] + cab, index = False)
+            po.to_excel(writer, sheet_name='Programa',header=['Programa'] + cab, index = False)
+            te.to_excel(writer, sheet_name='Intentos',header=['Intentos'] + cab, index = False)
+            zo.to_excel(writer, sheet_name='Zonas',header=['Zonas'] + cab, index = False)
+            condi.to_excel(writer, sheet_name='Condiciones',header=['Cedula','Estudiante','Correo','Condicion especial'],index=False)
         with pd.ExcelWriter('media/resultados/' + nombre_documento + '.xlsx') as excel_original:
             df.to_excel(excel_original, header = False, index = False)
     except:        
