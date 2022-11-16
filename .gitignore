@@ -2,3 +2,6 @@
 datos.txt
 .vscode
 .github
+.tmp.drivedownload
+.tmp.driveupload
+Estadisticos/migrations

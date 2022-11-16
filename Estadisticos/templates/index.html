@@ -88,9 +88,9 @@
             </div>
             </form>
         </div>
-        <h1>Video Explicativo</h1>
         {% for item in video %}
-            {% video item.url %}
+            <h1>{{item.title}}</h1>
+                {% video item.url %}
         {%endfor%}
     </div>
 
