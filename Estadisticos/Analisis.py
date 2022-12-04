@@ -8,7 +8,8 @@ def contar(datos, fila, item, item_columna, listado):
 
     for Y in range(0,len(item)):    
         if datos.iloc[fila, item_columna]==item[Y]:
-            listado[Y]=listado[Y]+1
+            listado[Y] = listado[Y]+1
+            break
     return listado
 
 def convenio(datos, fila, col_g, col_d, generacion, total_generacion, matricula_0, total_matricula_0):
