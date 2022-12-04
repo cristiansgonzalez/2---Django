@@ -5,3 +5,6 @@ datos.txt
 .tmp.drivedownload
 .tmp.driveupload
 Estadisticos/migrations
+
+media/resultados/*
+media/
