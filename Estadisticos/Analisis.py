@@ -140,12 +140,12 @@ def Analisis_Curso(*arg):
         col_definitiva=titulos.index('25 %')
     else:
         col_definitiva=titulos.index('Definitiva')
-        
+    '''    
     if df.iloc[inicial,col_75]=='**********':        
         for m in range(inicial,fil):
             for mm in range (0,3):
                 df.iloc[m,col_75+mm]=0
-    
+    '''
     for X in range(inicial, fil):
         
         if df.iloc[X, col_matricula]=='Reportado' or df.iloc[X, col_matricula]=='Matriculado' or df.iloc[X, col_matricula]=='Reportado 75%':
