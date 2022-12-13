@@ -47,6 +47,9 @@ def Analisis_Curso(*arg):
     #np.argwhere(df.iloc[:,:]=='Grupo')
     
     estudiante=[]
+    estudiante_no_participaron = []
+    documento_no_participaron = []
+    correo_no_participaron = []
     documento=[]
     correo=[]
     total_gen=[]
@@ -135,6 +138,7 @@ def Analisis_Curso(*arg):
     
     if arg[2]-arg[3]==1:
         col_definitiva=titulos.index('75 %')
+        print(col_definitiva)
         arg[3]
     elif arg[2]-arg[3]==2:
         col_definitiva=titulos.index('25 %')
@@ -149,7 +153,7 @@ def Analisis_Curso(*arg):
     for X in range(inicial, fil):
         
         if df.iloc[X, col_matricula]=='Reportado' or df.iloc[X, col_matricula]=='Matriculado' or df.iloc[X, col_matricula]=='Reportado 75%':
-               
+            
             if df.iloc[X, col_condi_especiales] != '**********':
                 condi_estudiante.append(df.iloc[X, 3])
                 condi_documento.append(df.iloc[X, 2])
@@ -158,12 +162,15 @@ def Analisis_Curso(*arg):
                     
             if df.iloc[X, 7+arg[2]]=='NO PRESENTADA' or df.iloc[X, 7+arg[2]]==0:
                 
-                #print('RESPUESTA ', str(Ceros))
+                #print('RESPUESTA ', str(Ceros))                
                 notas_estudiantes.append(0)
-                estudiante.append(df.iloc[X, 3])
+                estudiante.append(df.iloc[X, 3])                
                 documento.append(df.iloc[X, 2])
                 correo.append(df.iloc[X, 4])
-                Ceros=Ceros+1
+                estudiante_no_participaron.append(df.iloc[X, 3])
+                documento_no_participaron.append(df.iloc[X, 2])
+                correo_no_participaron.append(df.iloc[X, 4])
+                Ceros += 1
                 
                 if arg[4]=='si':
                     generacion1, total_gen, matricula1, total_matri0 = convenio(df,
@@ -258,6 +265,7 @@ def Analisis_Curso(*arg):
             aplazado+=1
       
     productos = np.transpose([documento,estudiante,correo ])
+    est_no_parti = np.transpose([documento_no_participaron, estudiante_no_participaron, correo_no_participaron])
 
     for z in range(0,len(Centros)):
         Center.append([Centros[z],Cent1[z],Cent2[z],aprobado_Cent[z], Cent1[z] + Cent2[z] + aprobado_Cent[z]])   
@@ -277,12 +285,13 @@ def Analisis_Curso(*arg):
     
     grafica.append(['',''])
     grafica.append(['Total Estudiantes',total_estudiantes + pendiente])
-    grafica.append(['Estudiantes Participaron '+arg[5]+' '+str(arg[2]),total_estudiantes-Ceros])
+    grafica.append(['Estudiantes Participaron '+arg[5]+' ' + str(arg[2]), total_estudiantes - Ceros])
     grafica.append(['Estudiantes No Participaron '+arg[5]+' '+str(arg[2]),Ceros])
     grafica.append(['Estudiantes Participaron y Aprobaron '+arg[5]+' '+str(arg[2]),Aprobado])
     grafica.append(['Estudiantes Participaron y No Aprobaron '+arg[5]+' '+str(arg[2]),Reprobaron])
     
     grafica.append(['',''])
+    grafica.append(['Participación %',((total_estudiantes - Ceros)/total_estudiantes)*100])
     grafica.append(['Aprobaron %',(Aprobado/(total_estudiantes))*100])
     grafica.append(['No participo %',(Ceros/(total_estudiantes))*100])
     grafica.append(['Reprobaron %',(Reprobaron/(total_estudiantes))*100])    
@@ -381,12 +390,13 @@ def Analisis_Curso(*arg):
 
     
     est = pd.DataFrame (productos)
+    est_no_p = pd.DataFrame (est_no_parti)
     po = pd.DataFrame (Program)
     ce = pd.DataFrame (Center)
     gra = pd.DataFrame (grafica)
     zo = pd.DataFrame (Zone)
-    te =pd.DataFrame (inten)
-    condi =pd.DataFrame (condiciones)
+    te = pd.DataFrame (inten)
+    condi = pd.DataFrame (condiciones)
     pendi = pd.DataFrame(list(set(profe_pendiente)))
     
     try:
@@ -394,13 +404,15 @@ def Analisis_Curso(*arg):
         with pd.ExcelWriter('media/resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx') as writer:
             cab = ['Ceros','Reprobaron','Aprobaron','Total']
             est.to_excel(writer, sheet_name='Estudiantes',header=['Cedula','Estudiante','Correo'],index=False)
+            est_no_p.to_excel(writer, sheet_name='No participaron',header=['Cedula','Estudiante','Correo'],index=False)
             gra.to_excel(writer, sheet_name='Grafica',header=False,index=False)
-            pendi.to_excel(writer, sheet_name='Pendiente',header= ['Profes que no han calificado'],index=False)
+            if profe_pendiente != []:
+                pendi.to_excel(writer, sheet_name='Pendiente',header= ['Profes que no han calificado'],index=False)
             ce.to_excel(writer, sheet_name='Centros',header=['Centros'] + cab, index = False)
             po.to_excel(writer, sheet_name='Programa',header=['Programa'] + cab, index = False)
             te.to_excel(writer, sheet_name='Intentos',header=['Intentos'] + cab, index = False)
             zo.to_excel(writer, sheet_name='Zonas',header=['Zonas'] + cab, index = False)
-            condi.to_excel(writer, sheet_name='Condiciones',header=['Cedula','Estudiante','Correo','Condicion especial'],index=False)
+            condi.to_excel(writer, sheet_name='Condiciones',header=['Cedula','Estudiante','Correo','Condicionespecial'],index=False)
         with pd.ExcelWriter('media/resultados/' + nombre_documento + '.xlsx') as excel_original:
             df.to_excel(excel_original, header = False, index = False)
     except:        
