@@ -114,7 +114,10 @@ def Analisis_Curso(*arg):
     col_condi_especiales=titulos.index('Necesidades Especiales')
     #col_definitiva=titulos.index('Definitiva')
     col_75=titulos.index('75 %')
+    col_actividad_final = col_75-1
     col_tutor = titulos.index('Tutor')
+    col_intentos=titulos.index('Num Matricula')
+    actividad=arg[2]
     
     
     #Se guardan todos los centros, programas y zonas
@@ -136,14 +139,23 @@ def Analisis_Curso(*arg):
     aprobado_Cent=(np.zeros((len(Centros))))
     
     
-    if arg[2]-arg[3]==1:
+    if actividad-col_actividad_final-col_intentos==1:
         col_definitiva=titulos.index('75 %')
-        print(col_definitiva)
-        arg[3]
-    elif arg[2]-arg[3]==2:
+    elif actividad-col_actividad_final-col_intentos==2:
         col_definitiva=titulos.index('25 %')
-    else:
+    elif actividad-col_actividad_final-col_intentos==3:
         col_definitiva=titulos.index('Definitiva')
+
+    if actividad==11:
+        col_definitiva=titulos.index('75 %')
+        actividad=col_definitiva-col_intentos        
+    elif actividad==12:
+        col_definitiva=titulos.index('25 %')
+        actividad=col_definitiva-col_intentos
+    elif actividad==13:
+        col_definitiva=titulos.index('Definitiva')
+        actividad=col_definitiva-col_intentos
+
     '''    
     if df.iloc[inicial,col_75]=='**********':        
         for m in range(inicial,fil):
@@ -160,7 +172,7 @@ def Analisis_Curso(*arg):
                 condi_correo.append(df.iloc[X, 4])
                 condicion.append(df.iloc[X, col_condi_especiales])
                     
-            if df.iloc[X, 7+arg[2]]=='NO PRESENTADA' or df.iloc[X, 7+arg[2]]==0:
+            if df.iloc[X, col_intentos+actividad]=='NO PRESENTADA' or df.iloc[X, col_intentos+actividad]==0:
                 
                 #print('RESPUESTA ', str(Ceros))                
                 notas_estudiantes.append(0)
@@ -172,8 +184,8 @@ def Analisis_Curso(*arg):
                 correo_no_participaron.append(df.iloc[X, 4])
                 Ceros += 1
                 
-                if arg[4]=='si':
-                    generacion1, total_gen, matricula1, total_matri0 = convenio(df,
+                #if arg[4]=='si':
+                generacion1, total_gen, matricula1, total_matri0 = convenio(df,
                             X, col_generacion_e, col_definitiva, generacion1, total_gen, matricula1, total_matri0)
 
                 if (df.iloc[X, col_generacion_e])[0]!='G' and (df.iloc[X, col_generacion_e])[0]!='M':
@@ -181,31 +193,31 @@ def Analisis_Curso(*arg):
                                   
                 Cent1 = contar(df, X, Centros, col_centro, Cent1)                        
                 Programa1 = contar(df, X, Programa, col_programa, Programa1)
-                intento2 = contar(df, X, intentos, 7, intento2)                
+                intento2 = contar(df, X, intentos, col_intentos, intento2)                
                 zona1 = contar(df, X, Zonas, col_zona, zona1)
             
-            elif df.iloc[X, 7+arg[2]] == 'Pendiente' or df.iloc[X, 7+arg[2]] == '[Pendiente]':
+            elif df.iloc[X, col_intentos+actividad] == 'Pendiente' or df.iloc[X, col_intentos+actividad] == '[Pendiente]':
                 pendiente += 1
                 profe_pendiente.append(df.iloc[X, col_tutor])
                 
             
             else:                
-                notas_estudiantes.append(float(df.iloc[X, 7+arg[2]]))
+                notas_estudiantes.append(float(df.iloc[X, col_intentos+actividad]))
                 
-                if float(df.iloc[X, 7+arg[2]])>=arg[1]*0.6:
+                if float(df.iloc[X, col_intentos+actividad])>=arg[1]*0.6:
                     
                     Aprobado=Aprobado+1
                             
                     aprobado_Cent = contar(df, X, Centros, col_centro, aprobado_Cent)                            
                     aprobado_programa = contar(df, X, Programa, col_programa, aprobado_programa)                            
-                    apro_intento = contar(df, X, intentos, 7, apro_intento)
+                    apro_intento = contar(df, X, intentos, col_intentos, apro_intento)
                     aprobado_zona = contar(df, X, Zonas, col_zona, aprobado_zona)
                     
-                    if arg[4]=='si':
-                        apro_Gen, total_gen, apro_Matri0, total_matri0 = convenio(df,
+                    #if arg[4]=='si':
+                    apro_Gen, total_gen, apro_Matri0, total_matri0 = convenio(df,
                             X, col_generacion_e, col_definitiva, apro_Gen, total_gen, apro_Matri0, total_matri0)
                 
-                if float(df.iloc[X, 7+arg[2]])<arg[1]*0.6:
+                if float(df.iloc[X, col_intentos+actividad])<arg[1]*0.6:
                     Reprobaron=Reprobaron+1
                     estudiante.append(df.iloc[X, 3])
                     documento.append(df.iloc[X, 2])
@@ -213,11 +225,11 @@ def Analisis_Curso(*arg):
 
                     Cent2 = contar(df, X, Centros, col_centro, Cent2)                            
                     Programa2 = contar(df, X, Programa, col_programa, Programa2) 
-                    repro_intento = contar(df, X, intentos, 7, repro_intento)
+                    repro_intento = contar(df, X, intentos, col_intentos, repro_intento)
                     zona2 = contar(df, X, Zonas, col_zona, zona2)   
                     
-                    if arg[4]=='si':
-                        generacion2, total_gen, matricula2, total_matri0 = convenio(df,
+                    #if arg[4]=='si':
+                    generacion2, total_gen, matricula2, total_matri0 = convenio(df,
                             X, col_generacion_e, col_definitiva, generacion2, total_gen, matricula2, total_matri0)
                 
                 if (df.iloc[X, col_generacion_e])[0]!='G' and (df.iloc[X, col_generacion_e])[0]!='M':
@@ -225,36 +237,36 @@ def Analisis_Curso(*arg):
                 
                 
                 #########################################
-            if df.iloc[X, 7] >= 2 :
-                if df.iloc[X, 7+arg[2]] != 'Pendiente' and df.iloc[X, 7+arg[2]] != '[Pendiente]':
+            if df.iloc[X, 7]>=2:
+                if df.iloc[X, col_intentos+actividad] != 'Pendiente' and df.iloc[X, col_intentos+actividad] != '[Pendiente]':
                     total_estudiantes2=total_estudiantes2+1
-                    #print(df.iloc[X, 7+arg[2]])
-                    if df.iloc[X, 7+arg[2]]=='NO PRESENTADA' or df.iloc[X, 7+arg[2]]==0:
+                    #print(df.iloc[X, 7+actividad])
+                    if df.iloc[X, col_intentos+actividad]=='NO PRESENTADA' or df.iloc[X, col_intentos+actividad]==0:
     
                         Ceros2=Ceros2+1
                         
-                        if arg[4]=='si':
-                            generacion12, total_gen2, matricula12, total_matri02 = convenio(df,
+                        #if arg[4]=='si':
+                        generacion12, total_gen2, matricula12, total_matri02 = convenio(df,
                                 X, col_generacion_e, col_definitiva, generacion12, total_gen2, matricula12, total_matri02)
                                 
                         if (df.iloc[X, col_generacion_e])[0]!='G' and (df.iloc[X, col_generacion_e])[0]!='M':
                             prom_bene2.append(df.iloc[X, col_definitiva])
     
                     else:
-                        if float(df.iloc[X, 7+arg[2]])>=arg[1]*0.6:
+                        if float(df.iloc[X, col_intentos+actividad])>=arg[1]*0.6:
                             
                             Aprobado2=Aprobado2+1
                             
-                            if arg[4]=='si':
-                                apro_Gen2, total_gen2, apro_Matri02, total_matri02 = convenio(df,
+                            #if arg[4]=='si':
+                            apro_Gen2, total_gen2, apro_Matri02, total_matri02 = convenio(df,
                                     X, col_generacion_e, col_definitiva, apro_Gen2, total_gen2, apro_Matri02, total_matri02)
                         
-                        if float(df.iloc[X, 7+arg[2]])<arg[1]*0.6:
+                        if float(df.iloc[X, col_intentos+actividad])<arg[1]*0.6:
                             
                             Reprobaron2=Reprobaron2+1                   
                             
-                            if arg[4]=='si':
-                                generacion22, total_gen2, matricula22, total_matri02 = convenio(df,
+                            #if arg[4]=='si':
+                            generacion22, total_gen2, matricula22, total_matri02 = convenio(df,
                                    X, col_generacion_e, col_definitiva, generacion22, total_gen2, matricula22, total_matri02)
                         
                     if (df.iloc[X, col_generacion_e])[0]!='G' and (df.iloc[X, col_generacion_e])[0]!='M':
@@ -279,16 +291,16 @@ def Analisis_Curso(*arg):
     
     total_estudiantes=fil-inicial-aplazado - pendiente
     grafica.append(['Total Estudiantes',total_estudiantes + pendiente])
-    grafica.append(['Estudiantes Participaron '+arg[5]+' '+str(arg[2]),total_estudiantes-Ceros])
-    grafica.append(['Estudiantes No Participaron '+arg[5]+' '+str(arg[2]),Ceros])
-    grafica.append(['Estudiantes sin calificacion '+arg[5]+' '+str(arg[2]),pendiente])
+    grafica.append(['Estudiantes Participaron '+arg[3]+' '+str(actividad),total_estudiantes-Ceros])
+    grafica.append(['Estudiantes No Participaron '+arg[3]+' '+str(actividad),Ceros])
+    grafica.append(['Estudiantes sin calificacion '+arg[3]+' '+str(actividad),pendiente])
     
     grafica.append(['',''])
     grafica.append(['Total Estudiantes',total_estudiantes + pendiente])
-    grafica.append(['Estudiantes Participaron '+arg[5]+' ' + str(arg[2]), total_estudiantes - Ceros])
-    grafica.append(['Estudiantes No Participaron '+arg[5]+' '+str(arg[2]),Ceros])
-    grafica.append(['Estudiantes Participaron y Aprobaron '+arg[5]+' '+str(arg[2]),Aprobado])
-    grafica.append(['Estudiantes Participaron y No Aprobaron '+arg[5]+' '+str(arg[2]),Reprobaron])
+    grafica.append(['Estudiantes Participaron '+arg[3]+' ' + str(actividad), total_estudiantes - Ceros])
+    grafica.append(['Estudiantes No Participaron '+arg[3]+' '+str(actividad),Ceros])
+    grafica.append(['Estudiantes Participaron y Aprobaron '+arg[3]+' '+str(actividad),Aprobado])
+    grafica.append(['Estudiantes Participaron y No Aprobaron '+arg[3]+' '+str(actividad),Reprobaron])
     
     grafica.append(['',''])
     grafica.append(['Participación %',((total_estudiantes - Ceros)/total_estudiantes)*100])
@@ -300,15 +312,15 @@ def Analisis_Curso(*arg):
     
     grafica.append(['',''])
     grafica.append(['Total Generacion E',len(total_gen)])
-    grafica.append(['Estudiantes No Participaron '+arg[5]+' '+str(arg[2]),generacion1])
+    grafica.append(['Estudiantes No Participaron '+arg[3]+' '+str(actividad),generacion1])
     grafica.append(['Estudiantes Reprobaron ',generacion2])
     
     grafica.append(['',''])
     grafica.append(['Total Matricula 0',len(total_matri0)])
-    grafica.append(['Estudiantes No Participaron '+arg[5]+' '+str(arg[2]),matricula1])
+    grafica.append(['Estudiantes No Participaron '+arg[3]+' '+str(actividad),matricula1])
     grafica.append(['Estudiantes Reprobaron ',matricula2])
     
-    if arg[2] > arg[3]:
+    if actividad > col_actividad_final:
         prom_total.append(total_gen+total_matri0+prom_bene)    
         total_sin_bene=total_estudiantes-len(total_matri0)-len(total_gen)
         apro_sin=Aprobado-apro_Gen-apro_Matri0
@@ -401,7 +413,7 @@ def Analisis_Curso(*arg):
     
     try:
         nombre_documento = arg[0][0:len(arg[0])-5]
-        with pd.ExcelWriter('media/resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx') as writer:
+        with pd.ExcelWriter('media/resultados/'+nombre_documento+' Reporte '+str(actividad)+'.xlsx') as writer:
             cab = ['Ceros','Reprobaron','Aprobaron','Total']
             est.to_excel(writer, sheet_name='Estudiantes',header=['Cedula','Estudiante','Correo'],index=False)
             est_no_p.to_excel(writer, sheet_name='No participaron',header=['Cedula','Estudiante','Correo'],index=False)
@@ -416,11 +428,11 @@ def Analisis_Curso(*arg):
         with pd.ExcelWriter('media/resultados/' + nombre_documento + '.xlsx') as excel_original:
             df.to_excel(excel_original, header = False, index = False)
     except:        
-        print('\n\nNo se puedo crear el '+'Reporte '+str(arg[2])+'.xlsx\n')
+        print('\n\nNo se puedo crear el '+'Reporte '+str(actividad)+'.xlsx\n')
     finally:        
-        print('El Reporte '+str(arg[2])+' Se creo Exitosamente')
-        print(nombre_documento+' Reporte '+str(arg[2])+'.xlsx')
+        print('El Reporte '+str(actividad)+' Se creo Exitosamente')
+        print(nombre_documento+' Reporte '+str(actividad)+'.xlsx')
     
-    return ('/media/resultados/'+nombre_documento+' Reporte '+str(arg[2])+'.xlsx')
+    return ('/media/resultados/'+nombre_documento+' Reporte '+str(actividad)+'.xlsx')
         
         

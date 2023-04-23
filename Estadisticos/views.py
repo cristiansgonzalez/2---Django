@@ -30,7 +30,7 @@ def index(request):
         contenido ={}
         archivo = request.FILES["excel"]
         tipo = request.POST["tipo"]
-        Numero_actividades = int(request.POST["Numero_actividades"])
+        #Numero_actividades = int(request.POST["Numero_actividades"])
         Puntaje_actividad = int(request.POST["Puntaje_actividad"])
         actividad = int(request.POST["actividad"])
         print(archivo.name)
@@ -39,7 +39,7 @@ def index(request):
         #direccion =fs.save(fs.get_valid_name(archivo.name), archivo)
         direccion =fs.save(archivo.name, archivo)
         print("direccion ", direccion)
-        reporte = Analisis_Curso(archivo.name, Puntaje_actividad, actividad, Numero_actividades, 'no', tipo)
+        reporte = Analisis_Curso(archivo.name, Puntaje_actividad, actividad, tipo)
         print(reporte)
         fs.delete(archivo.name)  
         
