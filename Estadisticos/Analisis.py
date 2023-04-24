@@ -111,13 +111,13 @@ def Analisis_Curso(*arg):
     col_zona=titulos.index('Zona')
     col_matricula=titulos.index('Estado Matricula')
     col_generacion_e=titulos.index('Convenios')
-    col_condi_especiales=titulos.index('Necesidades Especiales')
-    #col_definitiva=titulos.index('Definitiva')
+    col_condi_especiales=titulos.index('Necesidades Especiales')    
     col_75=titulos.index('75 %')
     col_actividad_final = col_75-1
     col_tutor = titulos.index('Tutor')
-    col_intentos=titulos.index('Num Matricula')
-    actividad=arg[2]
+    col_intentos=titulos.index('Num Intento')
+    actividad=int(arg[2])
+    col_definitiva=col_intentos+actividad
     
     
     #Se guardan todos los centros, programas y zonas
@@ -155,7 +155,7 @@ def Analisis_Curso(*arg):
     elif actividad==13:
         col_definitiva=titulos.index('Definitiva')
         actividad=col_definitiva-col_intentos
-
+    print('col definitiva ', col_definitiva)
     '''    
     if df.iloc[inicial,col_75]=='**********':        
         for m in range(inicial,fil):
@@ -229,15 +229,15 @@ def Analisis_Curso(*arg):
                     zona2 = contar(df, X, Zonas, col_zona, zona2)   
                     
                     #if arg[4]=='si':
-                    generacion2, total_gen, matricula2, total_matri0 = convenio(df,
-                            X, col_generacion_e, col_definitiva, generacion2, total_gen, matricula2, total_matri0)
+                    generacion2, total_gen, matricula2, total_matri0 = convenio(df, 
+                        X, col_generacion_e, col_definitiva, generacion2, total_gen, matricula2, total_matri0)
                 
                 if (df.iloc[X, col_generacion_e])[0]!='G' and (df.iloc[X, col_generacion_e])[0]!='M':
                     prom_bene.append(df.iloc[X, col_definitiva])
                 
                 
                 #########################################
-            if df.iloc[X, 7]>=2:
+            if df.iloc[X, col_intentos]>=2:
                 if df.iloc[X, col_intentos+actividad] != 'Pendiente' and df.iloc[X, col_intentos+actividad] != '[Pendiente]':
                     total_estudiantes2=total_estudiantes2+1
                     #print(df.iloc[X, 7+actividad])

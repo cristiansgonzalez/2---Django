@@ -5,6 +5,7 @@ datos.txt
 .tmp.drivedownload
 .tmp.driveupload
 Estadisticos/migrations
-
+Estadisticos/__pycache__/*
+unad/__pycache__/*
 media/resultados/*
 media/
